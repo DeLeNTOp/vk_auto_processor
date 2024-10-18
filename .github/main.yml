@@ -1,1 +1,27 @@
+name: Run VK Bot
 
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'  # Замените на вашу версию Python
+
+      - name: Install dependencies
+        run: |
+          pip install vk-api
+
+      - name: Run VK Bot
+        env:
+          VK_TOKEN: ${{ secrets.VK_TOKEN }}  # Используем секрет для токена
+        run: python vk_bot.py
